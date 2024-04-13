@@ -4,13 +4,13 @@ import sys
 import urllib
 
 from enums.emoji import Emoji
-def push_notification(tweet):
+def push_notification(notification_msg):
     conn = http.client.HTTPSConnection("api.pushover.net:443")
     conn.request("POST", "/1/messages.json",
                  urllib.parse.urlencode({
                      "token": "TOKEN",
                      "user": "USER",
-                     "message": tweet,
+                     "message": notification_msg,
                  }), {"Content-type": "application/x-www-form-urlencoded"})
     conn.getresponse()
 
@@ -18,7 +18,7 @@ def main(stdin):
     available_site_strings = generate_availability_strings(stdin)
 
     if available_site_strings:
-        tweet = generate_tweet_str(available_site_strings)
+        tweet = generate_notification_str(available_site_strings)
         push_notification(tweet)
         sys.exit(0)
     else:
@@ -26,7 +26,7 @@ def main(stdin):
         sys.exit(1)
 
 
-def generate_tweet_str(available_site_strings):
+def generate_notification_str(available_site_strings):
     tweet = "Hurry up!!! "
     tweet += " 🏕🏕🏕\n"
     tweet += "\n".join(available_site_strings)
