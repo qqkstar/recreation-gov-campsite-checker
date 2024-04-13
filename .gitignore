@@ -1,8 +1,11 @@
 /myvenv/
+/campingenv/
+/.idea
 __pycache__
 /next*
 /tweetlog
 /twitter_credentials.py
 /twitter_credentials.json
+/pushover_creds.json
 *.swp
 *egg-info
