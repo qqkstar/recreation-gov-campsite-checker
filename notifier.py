@@ -3,8 +3,10 @@ import http.client
 import sys
 import urllib
 import json
+import datetime
 
 from enums.emoji import Emoji
+
 def push_notification(notification_msg):
     pushover_creds = load_credentials('pushover_creds.json')
     conn = http.client.HTTPSConnection("api.pushover.net:443")
@@ -19,13 +21,19 @@ def push_notification(notification_msg):
 
 def main(stdin):
     available_site_strings = generate_availability_strings(stdin)
+    current_time = datetime.datetime.now()
 
     if available_site_strings:
         tweet = generate_notification_str(available_site_strings)
         push_notification(tweet)
+        custom_string = "Pushed notification at time:"
+        # Print the custom string followed by the formatted current time
+        print(f"{custom_string} {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
         sys.exit(0)
     else:
-        print("No campsites available, not pushing notification 😞")
+        custom_string = "Could not find available sites at time:"
+        # Print the custom string followed by the formatted current time
+        print(f"{custom_string} {current_time.strftime('%Y-%m-%d %H:%M:%S')}")
         sys.exit(1)
 
 

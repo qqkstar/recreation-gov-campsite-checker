@@ -9,3 +9,4 @@ __pycache__
 /pushover_creds.json
 *.swp
 *egg-info
+/logs
